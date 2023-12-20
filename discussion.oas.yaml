@@ -1,0 +1,695 @@
+openapi: 3.0.1
+info:
+  title: Discussion Forum APIs
+  description: This API exposes endpoints to manage discussion forum.
+  termsOfService: https://www.cognizant.com/terms
+  contact:
+    name: Cognizant
+    url: https://www.cognizant.com
+    email: need.to.add@cognizant.com
+  license:
+    name: MIT License
+    url: https://cognizant.com/licenses/mit/
+  version: '1.0'
+servers:
+- url: http://localhost:8092
+  description: Server URL in Development environment
+- url: http://10.120.101.240:8092
+  description: Server URL in QA environment
+tags:
+- name: Category
+  description: Category management APIs
+- name: Reply
+  description: Reply management APIs
+- name: Tag
+  description: Tag management APIs
+- name: Post
+  description: Post management APIs
+- name: Like
+  description: Post like management APIs
+- name: View
+  description: Post view management APIs
+paths:
+  "/reply/updateReplyComment":
+    put:
+      tags:
+      - Reply
+      summary: Update reply comment
+      operationId: updateReplyComment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Reply"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: boolean
+  "/post/updatePost":
+    put:
+      tags:
+      - Post
+      summary: update the old Post
+      operationId: updatePost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Post"
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            "*/*":
+              schema:
+                type: boolean
+  "/view/insertPostView":
+    post:
+      tags:
+      - View
+      summary: Create a new post view
+      operationId: insertPostView
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/PostView"
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            "*/*":
+              schema:
+                type: boolean
+  "/tag/createTag":
+    post:
+      tags:
+      - Tag
+      summary: Create a new Tags
+      operationId: createTags
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                "$ref": "#/components/schemas/Tag"
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            "*/*":
+              schema:
+                type: boolean
+  "/reply/insertReplyComment":
+    post:
+      tags:
+      - Reply
+      summary: Insert reply comment
+      operationId: insertReplyComment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Reply"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: boolean
+  "/post/createPost":
+    post:
+      tags:
+      - Post
+      summary: Create a new Post
+      operationId: createPost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Post"
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            "*/*":
+              schema:
+                type: boolean
+  "/like/insertPostLike":
+    post:
+      tags:
+      - Like
+      summary: Create a new post like
+      operationId: insertPostLike
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/PostLike"
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            "*/*":
+              schema:
+                type: boolean
+  "/category/createCategory":
+    post:
+      tags:
+      - Category
+      summary: Create a new Category
+      operationId: createCategory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                "$ref": "#/components/schemas/Category"
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            "*/*":
+              schema:
+                type: boolean
+  "/view/getPostViewCount/{postId}":
+    get:
+      tags:
+      - View
+      summary: Get the post view count based on post_id
+      operationId: getPostViewCountBasedOnPostId
+      parameters:
+      - name: postId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: integer
+                format: int32
+  "/view/getPostView/{postId}":
+    get:
+      tags:
+      - View
+      summary: select the post view based on postId and postViewBy
+      operationId: getPostView
+      parameters:
+      - name: postId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Created
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/PostView"
+  "/tag/getAllTags/{type}":
+    get:
+      tags:
+      - Tag
+      summary: Get all Tags
+      operationId: getAllTags
+      parameters:
+      - name: type
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  type: string
+  "/reply/getAllReplyCommentsCountBasedOnPostId/{postId}":
+    get:
+      tags:
+      - Reply
+      summary: Get all reply comments counts
+      operationId: getAllReplyCommentsCountBasedOnPostId
+      parameters:
+      - name: postId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: integer
+                format: int32
+  "/reply/getAllReplyCommentsBasedOnPostId/{postId}":
+    get:
+      tags:
+      - Reply
+      summary: Get all reply comments
+      operationId: getAllReplyCommentsBasedOnPostId
+      parameters:
+      - name: postId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Reply"
+  "/reply/approveReplyCommentByPostAdmin/{replyId}":
+    get:
+      tags:
+      - Reply
+      summary: Approve the reply comment by post admin
+      operationId: approveReplyCommentByPostAdmin
+      parameters:
+      - name: replyId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: boolean
+  "/post/getPostBasedOnPostId":
+    get:
+      tags:
+      - Post
+      summary: Get Post based on post id
+      operationId: getPostBasedOnPostId
+      parameters:
+      - name: loginUserName
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: postId
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Post"
+  "/post/getAllPosts":
+    get:
+      tags:
+      - Post
+      summary: Get all posts
+      operationId: getAllPosts
+      parameters:
+      - name: loginUserName
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: postType
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: postTag
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Post"
+  "/post/getAllPostsWithNoTag":
+    get:
+      tags:
+      - Post
+      summary: Get all posts with no tag
+      operationId: getAllPostsWithNoTags
+      parameters:
+      - name: loginUserName
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Post"
+  "/post/getAllPostsBasedOnTag":
+    get:
+      tags:
+      - Post
+      summary: Get all posts based on tag
+      operationId: getAllPostsBasedOnTags
+      parameters:
+      - name: loginUserName
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: postTag
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Post"
+  "/post/getAllPostsBasedOnSearchText":
+    get:
+      tags:
+      - Post
+      summary: Get Post based on search text
+      operationId: getPostBasedOnSearchText
+      parameters:
+      - name: postType
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: searchText
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Post"
+  "/post/getAllPostsBasedOnPostType":
+    get:
+      tags:
+      - Post
+      summary: Get all posts based on post-type
+      operationId: getAllPostsBasedOnPostType
+      parameters:
+      - name: postType
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Post"
+  "/post/getAllPostsBasedOnLoginUsername":
+    get:
+      tags:
+      - Post
+      summary: Get all posts based on login username
+      operationId: getAllPostsBasedOnLoginUserName
+      parameters:
+      - name: loginUserName
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Post"
+  "/post/getAllPostsBasedOnCategory":
+    get:
+      tags:
+      - Post
+      summary: Get all posts based on category
+      operationId: getAllPostsBasedOnCategory
+      parameters:
+      - name: postCategory
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Post"
+  "/like/getPostLikeCount/{postId}":
+    get:
+      tags:
+      - Like
+      summary: Get the post like count based on post_id
+      operationId: getPostLikeCountBasedOnPostId
+      parameters:
+      - name: postId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: integer
+                format: int32
+  "/like/getPostLike/{postId}":
+    get:
+      tags:
+      - Like
+      summary: select the post like based on postId and postLikeBy
+      operationId: getPostLike
+      parameters:
+      - name: postId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Created
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/PostLike"
+  "/dashboard/count-details/{projectName}":
+    get:
+      tags:
+      - dash-board-controller
+      operationId: getDashboardCount
+      parameters:
+      - name: projectName
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Created
+          content:
+            "*/*":
+              schema:
+                type: object
+                additionalProperties:
+                  type: integer
+                  format: int32
+  "/category/getAllActiveCategory":
+    get:
+      tags:
+      - Category
+      summary: Get all Category
+      operationId: getAllCategory
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Category"
+components:
+  schemas:
+    Reply:
+      type: object
+      properties:
+        id:
+          type: string
+        postId:
+          type: string
+        postReplyComment:
+          type: string
+        isReplyCommentApproveByPostAdmin:
+          type: boolean
+        postReplyCreatedDate:
+          type: string
+          format: date-time
+        replyCreatedBy:
+          type: string
+        postReplyUpdatedDate:
+          type: string
+          format: date-time
+    Post:
+      type: object
+      properties:
+        id:
+          type: string
+        postTitle:
+          type: string
+        postDescription:
+          type: string
+        postType:
+          type: string
+        postTags:
+          type: array
+          items:
+            type: string
+        postCreatedBy:
+          type: string
+        postUpdatedDate:
+          type: string
+          format: date-time
+        postCreatedDate:
+          type: string
+          format: date-time
+        loginUserLikeStatus:
+          type: boolean
+        lastReplyDate:
+          type: string
+          format: date-time
+        postUpdateEnable:
+          type: boolean
+        viewsCounts:
+          type: integer
+          format: int32
+        postRepliesCounts:
+          type: integer
+          format: int32
+        postLikesCounts:
+          type: integer
+          format: int32
+        replies:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Reply"
+        replyUserCount:
+          type: integer
+          format: int32
+    PostView:
+      type: object
+      properties:
+        id:
+          type: string
+        postId:
+          type: string
+        postViewBy:
+          type: string
+        postViewCreatedDate:
+          type: string
+          format: date-time
+    Tag:
+      type: object
+      properties:
+        id:
+          type: string
+        tagName:
+          type: string
+        postType:
+          type: string
+        postCreatedDate:
+          type: string
+          format: date-time
+    PostLike:
+      type: object
+      properties:
+        id:
+          type: string
+        postId:
+          type: string
+        postLikeBy:
+          type: string
+        havingLike:
+          type: boolean
+        postLikeCreatedDate:
+          type: string
+          format: date-time
+    Category:
+      type: object
+      properties:
+        id:
+          type: string
+        categoryName:
+          type: string
+        isCategoryActive:
+          type: boolean
+        categoryCreatedDate:
+          type: string
+          format: date-time
